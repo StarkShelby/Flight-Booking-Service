@@ -20,4 +20,17 @@ async function createBooking(req, res) {
   }
 }
 
-module.exports = { createBooking };
+async function cancelBooking(req, res) {
+  try {
+    const reponse = await BookingService.cancelBooking(req.params.id);
+    SuccessResponse.data = response;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    return res
+      .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(ErrorResponse);
+  }
+}
+
+module.exports = { createBooking, cancelBooking };
