@@ -31,7 +31,8 @@ async function createBooking(data) {
         },
       );
       console.log(flight);
-      return flight.data;
+      transaction.commit();
+      return booking;
     });
     return t; //transaction
   } catch (error) {
