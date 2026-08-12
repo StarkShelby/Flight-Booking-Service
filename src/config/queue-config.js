@@ -1,9 +1,9 @@
-const amqlib = require("amqplib");
+const amqplib = require("amqplib");
 let connection, channel;
 
 async function connectionQueue() {
   try {
-    connection = await amqlib.connect("amqp://localhost");
+    connection = await amqplib.connect("amqp://localhost");
     channel = await connection.createChannel();
     await channel.assertQueue("noti-queue");
   } catch (error) {
