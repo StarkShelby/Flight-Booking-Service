@@ -13,4 +13,5 @@ Queue.connectionQueue();
 app.listen(ServerConfig.PORT, () => {
   console.log(`Successfully started the server on PORT : ${ServerConfig.PORT}`);
   CRON();
+  console.log("Queue connected");
 });

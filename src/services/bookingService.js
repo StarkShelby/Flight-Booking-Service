@@ -103,7 +103,7 @@ async function makePayment(data) {
     }
 
     Queue.sendData({
-      recipientEmail: "Hello@gmail.com",
+      recipientEmail: "airlineservice107gmail.com",
       subject: "Flight booked",
       text: `Booking successfully done for the booking ${data.bookingId}`,
     });
