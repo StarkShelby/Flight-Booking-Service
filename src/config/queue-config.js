@@ -3,7 +3,7 @@ let connection, channel;
 
 async function connectionQueue() {
   try {
-    connection = await amqplib.connect("amqp://localhost");
+    connection = await amqplib.connect("amqp://127.0.0.1");
     channel = await connection.createChannel();
     await channel.assertQueue("noti-queue");
   } catch (error) {
