@@ -42,15 +42,12 @@ class BookingRepo extends CrudRepo {
   }
 
   async update(data, id, transaction) {
-    const respones = await Booking.update(
-      data,
-      {
-        where: {
-          id: id,
-        },
+    const respones = await Booking.update(data, {
+      where: {
+        id: id,
       },
-      { transaction: transaction },
-    );
+      transaction,
+    });
     return respones;
   }
 

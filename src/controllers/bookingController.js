@@ -2,7 +2,8 @@ const { BookingService } = require("../services");
 const { StatusCodes } = require("http-status-codes");
 const { SuccessResponse, ErrorResponse } = require("../utils/common");
 const { makePyment } = require("../services/bookingService");
-
+const { BookingRepo } = require("../repositories");
+const inMemDb = {};
 async function createBooking(req, res) {
   try {
     const flight = await BookingService.createBooking({
@@ -43,20 +44,23 @@ async function makePayment(req, res) {
         .json({ message: "IdempotencyKey is missing" });
     }
     if (inMemDb[idempotencyKey]) {
-      res
+      return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ message: "Payment already Done" });
     }
     const response = await BookingService.makePayment({
-        totalCost: req.body.totalCost,
-        userId:req.body.userId,
-        bookingId:req.body.bookingId
+      totalCost: req.body.totalCost,
+      userId: req.body.userId,
+      bookingId: req.body.bookingId,
+    });
+    inMemDb[idempotencyKey] = idempotencyKey;
 
-    })
-    inMemDb([idempotencyKey]) = idempotencyKey
     SuccessResponse.data = response;
-    return res.status(StatusCodes.BAD_REQUEST).json(SuccessResponse)
+    return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
+    console.log("Controller Error:");
+    console.log(error);
+    console.log(error.message);
     ErrorResponse.error = error;
     return res
       .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
